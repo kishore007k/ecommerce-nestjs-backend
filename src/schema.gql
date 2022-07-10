@@ -1,0 +1,47 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Product {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  name: String
+  order: Order
+}
+
+"""
+`Date` type as integer. Type represents date and time as number of milliseconds from start of UNIX epoch.
+"""
+scalar Timestamp
+
+type Order {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  name: String
+  user: User
+  products: [Product!]
+}
+
+type User {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  name: String
+  email: String!
+  password: String!
+  salt: String
+  avatar: String
+  deletedAt: String
+  orders: [Order!]
+}
+
+type Query {
+  getAllUsers: [User!]!
+  getUser(id: String!): User!
+}
+
+type Mutation {
+  createUser(email: String!, password: String!): User!
+}
