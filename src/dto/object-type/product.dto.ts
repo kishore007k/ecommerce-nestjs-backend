@@ -2,7 +2,7 @@ import "reflect-metadata";
 import { Field, ObjectType } from "@nestjs/graphql";
 import { BaseModel } from "../base.dto";
 import { IsOptional, IsString } from "class-validator";
-import { Order } from "./order.dto";
+import { OrderProducts } from "./order-products.dto";
 
 @ObjectType()
 export class Product extends BaseModel {
@@ -11,6 +11,6 @@ export class Product extends BaseModel {
   @IsOptional()
   name?: string;
 
-  @Field(() => Order, { nullable: true })
-  order?: Order | null;
+  @Field(() => [OrderProducts], { nullable: true })
+  orderProducts?: OrderProducts | null;
 }

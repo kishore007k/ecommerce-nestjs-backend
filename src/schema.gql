@@ -2,12 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Product {
+type OrderProducts {
   id: String!
   createdAt: Timestamp!
   updatedAt: Timestamp!
-  name: String
-  order: Order
+  orderId: String
+  productId: String
 }
 
 """
@@ -21,7 +21,7 @@ type Order {
   updatedAt: Timestamp!
   name: String
   user: User
-  products: [Product!]
+  orderProducts: [OrderProducts!]
 }
 
 type User {
@@ -33,8 +33,15 @@ type User {
   password: String!
   salt: String
   avatar: String
+  role: Role
+  refreshToken: String
   deletedAt: String
   orders: [Order!]
+}
+
+enum Role {
+  ADMIN
+  USER
 }
 
 type Query {

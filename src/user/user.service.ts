@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { CustomError } from "src/dto/custom-error.dto";
-import { User } from "src/dto/object-type/user.dto";
 import { PrismaService } from "src/prisma/prisma.service";
 import { v4 as uuidV4 } from "uuid";
+import { CustomError } from "src/dto/custom-error.dto";
+import { User } from "src/dto/object-type/user.dto";
 import * as bcrypt from "bcrypt";
+import { UserPass } from "src/dto/object-type/user-with-pass.dto";
 
 @Injectable()
 export class UserService {
@@ -11,7 +12,16 @@ export class UserService {
 
   async getUsers(): Promise<User[] | CustomError> {
     try {
-      const users = await this.prismaService.user.findMany();
+      const users = await this.prismaService.user.findMany({
+        include: {
+          orders: {
+            include: {
+              orderProducts: true,
+            },
+          },
+          wishlists: true,
+        },
+      });
       return users;
     } catch (error) {
       return {
@@ -36,17 +46,19 @@ export class UserService {
     }
   }
 
-  async createUser({ email, password }: any): Promise<User | CustomError> {
+  async createUser({
+    email,
+    password,
+    salt,
+  }: any): Promise<User | CustomError> {
     try {
       const id = uuidV4();
-      const salt = await bcrypt.genSalt(10);
-      const hashedPassword = await bcrypt.hashSync(password, salt);
 
       const data = {
         id,
         email,
         salt,
-        password: hashedPassword,
+        password,
       };
 
       const newUser = this.prismaService.user.create({
@@ -54,6 +66,40 @@ export class UserService {
       });
 
       return newUser;
+    } catch (error) {
+      return {
+        message: error.message,
+        statusCode: error.statusCode,
+      };
+    }
+  }
+
+  async findOne(email: string): Promise<UserPass | CustomError> {
+    try {
+      const user = await this.prismaService.user.findUnique({
+        where: { email },
+      });
+
+      return user;
+    } catch (error) {
+      return {
+        message: error.message,
+        statusCode: error.statusCode,
+      };
+    }
+  }
+
+  async updateRefreshToken(
+    id: string,
+    refreshToken: string,
+  ): Promise<any | CustomError> {
+    try {
+      const user = await this.prismaService.user.update({
+        where: { id },
+        data: { refreshToken },
+      });
+
+      return user;
     } catch (error) {
       return {
         message: error.message,

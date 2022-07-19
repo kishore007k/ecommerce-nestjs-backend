@@ -6,7 +6,7 @@ import { BaseModel } from "../base.dto";
 import { Role } from "../enum/role";
 
 @ObjectType()
-export class User extends BaseModel {
+export class UserPass extends BaseModel {
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
@@ -14,12 +14,11 @@ export class User extends BaseModel {
 
   @Field(() => String, { nullable: false })
   @IsEmail()
-  email: string;
+  email?: string;
 
   @Field(() => String, { nullable: false })
   @IsString()
-  @HideField()
-  password: string;
+  password?: string;
 
   @Field(() => String, { nullable: true })
   @IsString()
