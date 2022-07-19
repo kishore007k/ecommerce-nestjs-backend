@@ -44,11 +44,64 @@ enum Role {
   USER
 }
 
+type CustomResponse {
+  message: String!
+  statusCode: Float!
+}
+
+type UserPass {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  name: String
+  email: String!
+  password: String!
+  salt: String
+  avatar: String
+  role: Role
+  refreshToken: String
+  deletedAt: String
+  orders: [Order!]
+}
+
+type LoginResponse {
+  user: UserPass!
+  token: String!
+}
+
 type Query {
   getAllUsers: [User!]!
   getUser(id: String!): User!
 }
 
 type Mutation {
-  createUser(email: String!, password: String!): User!
+  updateUser(id: String!, user: UserInput!): User!
+  uploadFile(id: String!, file: Upload!): CustomResponse!
+  deleteUser(id: String!): CustomResponse!
+  signup(email: String!, password: String!, confirmPassword: String!): CustomResponse!
+  login(email: String!, password: String!): LoginResponse!
 }
+
+input UserInput {
+  id: String
+  name: String
+  email: String
+  password: String
+  salt: String
+  role: Role
+  refreshToken: String
+  posts: [OrderInput!]
+}
+
+input OrderInput {
+  name: String
+  posts: [ProductInput!]
+}
+
+input ProductInput {
+  id: String
+  name: String
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload

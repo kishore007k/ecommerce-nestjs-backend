@@ -7,19 +7,23 @@ import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 import { PrismaModule } from "./prisma/prisma.module";
 import { UserModule } from "./user/user.module";
-import { AuthModule } from './auth/auth.module';
-import { ProductModule } from './product/product.module';
-import { OrderModule } from './order/order.module';
-import { WishlistModule } from './wishlist/wishlist.module';
+import { AuthModule } from "./auth/auth.module";
+import { ProductModule } from "./product/product.module";
+import { OrderModule } from "./order/order.module";
+import { WishlistModule } from "./wishlist/wishlist.module";
 
 @Module({
   imports: [
-    GraphQLModule.forRoot<ApolloDriverConfig>({
+    GraphQLModule.forRoot({
       driver: ApolloDriver,
       playground: false,
       plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
       buildSchemaOptions: { dateScalarMode: "timestamp" },
+      uploads: {
+        maxFileSize: 10000000,
+        maxFiles: 20,
+      },
     }),
 
     PrismaModule,
