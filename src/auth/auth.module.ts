@@ -10,7 +10,7 @@ import { AuthService } from "./auth.service";
 
     // JWT Module
     JwtModule.register({
-      secret: process.env.JWTKEY,
+      secret: process.env.JWT_KEY,
       signOptions: { expiresIn: process.env.TOKEN_EXPIRATION },
     }),
   ],

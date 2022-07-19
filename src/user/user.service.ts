@@ -3,7 +3,6 @@ import { PrismaService } from "src/prisma/prisma.service";
 import { v4 as uuidV4 } from "uuid";
 import { CustomError } from "src/dto/custom-error.dto";
 import { User } from "src/dto/object-type/user.dto";
-import * as bcrypt from "bcrypt";
 import { UserPass } from "src/dto/object-type/user-with-pass.dto";
 
 @Injectable()
