@@ -107,7 +107,7 @@ export class UserService {
   async updateRefreshToken(
     id: string,
     refreshToken: string,
-  ): Promise<any | CustomError> {
+  ): Promise<UserPass | CustomError> {
     try {
       const user = await this.prismaService.user.update({
         where: { id },

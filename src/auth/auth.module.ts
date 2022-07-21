@@ -11,9 +11,9 @@ import { AuthService } from "./auth.service";
     // JWT Module
     JwtModule.register({
       secret: process.env.JWT_KEY,
-      signOptions: { expiresIn: process.env.TOKEN_EXPIRATION },
+      signOptions: { expiresIn: "60s" },
     }),
   ],
-  providers: [AuthResolver, AuthService, JwtService],
+  providers: [AuthResolver, AuthService],
 })
 export class AuthModule {}

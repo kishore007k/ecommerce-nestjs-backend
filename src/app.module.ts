@@ -11,6 +11,9 @@ import { AuthModule } from "./auth/auth.module";
 import { ProductModule } from "./product/product.module";
 import { OrderModule } from "./order/order.module";
 import { WishlistModule } from "./wishlist/wishlist.module";
+import { CategoryModule } from './category/category.module';
+import { TagModule } from './tag/tag.module';
+import { ImageModule } from './image/image.module';
 
 @Module({
   imports: [
@@ -32,6 +35,9 @@ import { WishlistModule } from "./wishlist/wishlist.module";
     ProductModule,
     OrderModule,
     WishlistModule,
+    CategoryModule,
+    TagModule,
+    ImageModule,
   ],
 
   controllers: [AppController],

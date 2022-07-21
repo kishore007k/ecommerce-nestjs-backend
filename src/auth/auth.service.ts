@@ -107,12 +107,37 @@ export class AuthService {
         role: isVerified.role,
       };
 
-      // Create Access Token and Refresh Token
-      const accessToken = this.jwtService.sign(payload);
-      const refreshToken = this.jwtService.sign(payload);
+      if (isVerified.refreshToken === null) {
+        const refreshToken = this.jwtService.sign(payload, { expiresIn: "7d" });
 
-      // Update Refresh token to User in database
-      await this.usersService.updateRefreshToken(isVerified.id, refreshToken);
+        // Update Refresh token to User in database
+        const isUpdated = await this.usersService.updateRefreshToken(
+          isVerified.id,
+          refreshToken,
+        );
+
+        if (isUpdated instanceof CustomError) {
+          return {
+            message: "Error updating refresh token",
+            statusCode: 500,
+          };
+        }
+      }
+
+      // Verify refresh token and return access token
+      const isVerifiedRt = await this.jwtService.verify(
+        isVerified.refreshToken,
+      );
+
+      if (isVerifiedRt instanceof CustomError) {
+        return {
+          message: "Invalid refresh token",
+          statusCode: 401,
+        };
+      }
+
+      // Create Access Token and Refresh Token
+      const accessToken = this.jwtService.sign(payload, { expiresIn: "1h" });
 
       return { user: isVerified, token: accessToken };
     } catch (error) {

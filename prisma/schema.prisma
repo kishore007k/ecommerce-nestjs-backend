@@ -20,6 +20,8 @@ model User {
   updatedAt    DateTime   @default(now())
   orders       Order[]
   wishlists    Wishlist[]
+  review       Review[]
+  Image        Image[]
 }
 
 model Order {
@@ -35,11 +37,21 @@ model Order {
 model Product {
   id            String          @id @default(cuid())
   name          String?
+  price         Float           @default(0)
+  description   String?
+  quantity      Int             @default(0)
+  stars         Int             @default(0)
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @default(now())
   wislist       Wishlist?       @relation(fields: [wishlistId], references: [id])
   wishlistId    String?
+  category      Category?       @relation(fields: [categoryId], references: [id])
+  categoryId    String?
+  tag           Tag?            @relation(fields: [tagId], references: [id])
+  tagId         String?
   orderProducts OrderProducts[]
+  reviews       Review[]
+  image         Image[]
 }
 
 model OrderProducts {
@@ -60,6 +72,47 @@ model Wishlist {
   user      User?     @relation(fields: [userId], references: [id])
   userId    String?
   products  Product[]
+}
+
+model Review {
+  id          String   @id @default(cuid())
+  review      String?
+  description String?
+  stars       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now())
+  product     Product? @relation(fields: [productId], references: [id])
+  productId   String?
+  user        User?    @relation(fields: [userId], references: [id])
+  userId      String?
+}
+
+model Category {
+  id        String    @id @default(cuid())
+  category  String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  products  Product[]
+}
+
+model Tag {
+  id        String    @id @default(cuid())
+  tag       String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @default(now())
+  products  Product[]
+}
+
+model Image {
+  id        String   @id @default(cuid())
+  url       String?
+  alt       String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+  product   Product? @relation(fields: [productId], references: [id])
+  productId String?
+  User      User?    @relation(fields: [userId], references: [id])
+  userId    String?
 }
 
 enum Role {

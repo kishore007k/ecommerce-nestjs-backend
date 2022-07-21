@@ -24,6 +24,53 @@ type Order {
   orderProducts: [OrderProducts!]
 }
 
+type Review {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  review: String
+  description: String
+  stars: String
+  userId: String
+  productId: String
+}
+
+type Image {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  alt: String
+  url: String!
+  userId: String
+  productId: String
+}
+
+type Product {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  name: String
+  price: Float
+  quantity: Int
+  stars: Int
+  description: String
+  wishlistId: String
+  categoryId: String
+  tagId: String
+  orderProducts: [OrderProducts!]
+  reviews: [Review!]
+  image: [Image!]
+}
+
+type Wishlist {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  name: String
+  userId: String
+  products: [Product!]
+}
+
 type User {
   id: String!
   createdAt: Timestamp!
@@ -31,12 +78,14 @@ type User {
   name: String
   email: String!
   password: String!
-  salt: String
   avatar: String
+  salt: String
   role: Role
   refreshToken: String
   deletedAt: String
   orders: [Order!]
+  review: [Review!]
+  wishlist: [Wishlist!]
 }
 
 enum Role {
@@ -55,13 +104,15 @@ type UserPass {
   updatedAt: Timestamp!
   name: String
   email: String!
-  password: String!
-  salt: String
+  password: String
   avatar: String
+  salt: String
   role: Role
   refreshToken: String
   deletedAt: String
   orders: [Order!]
+  review: [Review!]
+  wishlist: [Wishlist!]
 }
 
 type LoginResponse {
@@ -69,9 +120,36 @@ type LoginResponse {
   token: String!
 }
 
+type Category {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  category: String
+  products: [Product!]
+}
+
+type Tag {
+  id: String!
+  createdAt: Timestamp!
+  updatedAt: Timestamp!
+  tag: String
+  products: [Product!]
+}
+
 type Query {
   getAllUsers: [User!]!
   getUser(id: String!): User!
+  getProductById(id: String!): Product!
+  getProducts: [Product!]!
+  getProductsByTitle(name: String!): [Product!]!
+  getProductsByCategory(category: String!): [Product!]!
+  getProductsByTag(tag: String!): [Product!]!
+  getProductsByPrice(price: Float!): [Product!]!
+  getProductsPaginated(name: String!, skip: Float!, take: Float!): [Product!]!
+  getCategoryById(id: String!): Category!
+  getCategories: [Category!]!
+  getTagById(id: String!): Tag!
+  getTags: [Tag!]!
 }
 
 type Mutation {
@@ -80,28 +158,43 @@ type Mutation {
   deleteUser(id: String!): CustomResponse!
   signup(email: String!, password: String!, confirmPassword: String!): CustomResponse!
   login(email: String!, password: String!): LoginResponse!
+  createProduct(product: ProductInput!): Product!
+  updateProduct(id: String!, product: ProductInput!): Product!
+  deleteProduct(id: String!): CustomResponse!
+  createCategory(category: CategoryInput!): Category!
+  deleteCategory(id: String!): CustomResponse!
+  createTag(tag: TagInput!): Tag!
+  deleteTag(id: String!): CustomResponse!
 }
 
 input UserInput {
-  id: String
   name: String
-  email: String
-  password: String
+  email: String!
+  password: String!
   salt: String
   role: Role
   refreshToken: String
-  posts: [OrderInput!]
-}
-
-input OrderInput {
-  name: String
-  posts: [ProductInput!]
-}
-
-input ProductInput {
-  id: String
-  name: String
+  deletedAt: String
 }
 
 """The `Upload` scalar type represents a file upload."""
 scalar Upload
+
+input ProductInput {
+  name: String
+  price: Float
+  quantity: Int
+  stars: Int
+  description: String
+  wishlistId: String
+  categoryId: String
+  tagId: String
+}
+
+input CategoryInput {
+  category: String
+}
+
+input TagInput {
+  tag: String
+}

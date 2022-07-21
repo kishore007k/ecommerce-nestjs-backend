@@ -4,6 +4,8 @@ import { IsDateString, IsEmail, IsOptional, IsString } from "class-validator";
 import { Order } from "./order.dto";
 import { BaseModel } from "../base.dto";
 import { Role } from "../enum/role";
+import { Review } from "./review.dto";
+import { Wishlist } from "./wishlist.dto";
 
 @ObjectType()
 export class UserPass extends BaseModel {
@@ -16,19 +18,20 @@ export class UserPass extends BaseModel {
   @IsEmail()
   email?: string;
 
-  @Field(() => String, { nullable: false })
+  @Field(() => String, { nullable: true })
   @IsString()
+  @IsOptional()
   password?: string;
 
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
-  salt?: string;
+  avatar?: string;
 
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
-  avatar?: string;
+  salt?: string;
 
   @Field(() => Role, { nullable: true })
   @IsOptional()
@@ -46,4 +49,10 @@ export class UserPass extends BaseModel {
 
   @Field(() => [Order], { nullable: true })
   orders?: Order[] | null;
+
+  @Field(() => [Review], { nullable: true })
+  review?: Review[] | [];
+
+  @Field(() => [Wishlist], { nullable: true })
+  wishlist?: Wishlist[] | null;
 }

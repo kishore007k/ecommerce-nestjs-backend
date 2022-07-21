@@ -1,25 +1,20 @@
 import "reflect-metadata";
 import { Field, HideField, InputType } from "@nestjs/graphql";
-import { IsEmail, IsOptional, IsString } from "class-validator";
-import { OrderInput } from "./order.dto";
+import { IsDateString, IsEmail, IsOptional, IsString } from "class-validator";
 import { Role } from "../enum/role";
 
 @InputType()
 export class UserInput {
   @Field(() => String, { nullable: true })
   @IsString()
-  id: string;
-
-  @Field(() => String, { nullable: true })
-  @IsString()
   @IsOptional()
   name?: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: false })
   @IsEmail()
   email: string;
 
-  @Field(() => String, { nullable: true })
+  @Field(() => String, { nullable: false })
   @IsString()
   @HideField()
   password: string;
@@ -31,13 +26,15 @@ export class UserInput {
 
   @Field(() => Role, { nullable: true })
   @IsOptional()
-  role?: Role;
+  role: Role;
 
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
   refreshToken?: string;
 
-  @Field(() => [OrderInput], { nullable: true })
-  posts: [OrderInput];
+  @Field(() => String, { nullable: true })
+  @IsDateString()
+  @HideField()
+  deletedAt?: Date;
 }
