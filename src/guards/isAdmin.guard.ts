@@ -27,7 +27,12 @@ export class IsAdminGuard implements CanActivate {
       context.getHandler(),
     );
 
-    if (isPublic) {
+    const isAdmin = this.reflector.get<boolean>(
+      "isAdmin",
+      context.getHandler(),
+    );
+
+    if (isPublic || isAdmin) {
       return true;
     }
 

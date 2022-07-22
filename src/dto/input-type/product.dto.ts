@@ -43,4 +43,8 @@ export class ProductInput {
   @IsString()
   @IsOptional()
   tagId?: string;
+
+  @Field(() => [String], { nullable: true })
+  @IsOptional()
+  image?: string[];
 }

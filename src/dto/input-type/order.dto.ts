@@ -1,7 +1,6 @@
 import "reflect-metadata";
-import { Field, InputType } from "@nestjs/graphql";
-import { IsOptional, IsString } from "class-validator";
-import { ProductInput } from "./product.dto";
+import { Field, Float, InputType } from "@nestjs/graphql";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 @InputType()
 export class OrderInput {
@@ -10,6 +9,13 @@ export class OrderInput {
   @IsOptional()
   name?: string;
 
-  @Field(() => [ProductInput], { nullable: true })
-  posts: [ProductInput];
+  @Field(() => Float, { nullable: true })
+  @IsNumber()
+  @IsOptional()
+  price?: number;
+
+  @Field(() => Float, { nullable: true })
+  @IsNumber()
+  @IsOptional()
+  quantity?: number;
 }

@@ -17,9 +17,4 @@ export class ImageInput {
   @IsString()
   @IsOptional()
   userId?: string;
-
-  @Field(() => String, { nullable: true })
-  @IsString()
-  @IsOptional()
-  productId?: string;
 }

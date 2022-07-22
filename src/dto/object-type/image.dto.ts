@@ -18,9 +18,4 @@ export class Image extends BaseModel {
   @IsString()
   @IsOptional()
   userId?: string;
-
-  @Field(() => String, { nullable: true })
-  @IsString()
-  @IsOptional()
-  productId?: string;
 }

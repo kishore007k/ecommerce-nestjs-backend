@@ -1,12 +1,8 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { CustomError } from "src/dto/custom-error.dto";
 import { CustomResponse } from "src/dto/custom-response.dto";
-import { CategoryInput } from "src/dto/input-type/category.dto";
 import { ProductInput } from "src/dto/input-type/product.dto";
-import { TagInput } from "src/dto/input-type/tag.dto";
-import { Category } from "src/dto/object-type/category.dto";
 import { Product } from "src/dto/object-type/product.dto";
-import { Tag } from "src/dto/object-type/tag.dto";
 import { ProductService } from "./product.service";
 
 @Resolver()
@@ -88,5 +84,5 @@ export class ProductResolver {
   @Mutation(() => CustomResponse, { name: "deleteProduct" })
   async delete(@Args("id") id: string): Promise<CustomResponse | CustomError> {
     return this.productService.deleteProduct(id);
-  } 
+  }
 }

@@ -149,6 +149,8 @@ export class UserService {
 
       return `${process.env.IMAGE_UPLOADER_URL}/${fileName}`;
     } catch (error) {
+      console.log(error);
+
       return {
         message: error.message,
         statusCode: error.statusCode,

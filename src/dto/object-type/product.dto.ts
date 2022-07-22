@@ -33,6 +33,10 @@ export class Product extends BaseModel {
   @IsOptional()
   description?: string;
 
+  @Field(() => [String], { nullable: true })
+  @IsOptional()
+  image?: string[];
+
   @Field(() => String, { nullable: true })
   @IsString()
   @IsOptional()
@@ -53,7 +57,4 @@ export class Product extends BaseModel {
 
   @Field(() => [Review], { nullable: true })
   reviews?: Review[] | null;
-
-  @Field(() => [Image], { nullable: true })
-  image?: Image[] | null;
 }

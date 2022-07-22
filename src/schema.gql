@@ -20,6 +20,8 @@ type Order {
   createdAt: Timestamp!
   updatedAt: Timestamp!
   name: String
+  price: Float
+  quantity: Float
   user: User
   orderProducts: [OrderProducts!]
 }
@@ -35,16 +37,6 @@ type Review {
   productId: String
 }
 
-type Image {
-  id: String!
-  createdAt: Timestamp!
-  updatedAt: Timestamp!
-  alt: String
-  url: String!
-  userId: String
-  productId: String
-}
-
 type Product {
   id: String!
   createdAt: Timestamp!
@@ -54,12 +46,12 @@ type Product {
   quantity: Int
   stars: Int
   description: String
+  image: [String!]
   wishlistId: String
   categoryId: String
   tagId: String
   orderProducts: [OrderProducts!]
   reviews: [Review!]
-  image: [Image!]
 }
 
 type Wishlist {
@@ -165,6 +157,7 @@ type Mutation {
   deleteCategory(id: String!): CustomResponse!
   createTag(tag: TagInput!): Tag!
   deleteTag(id: String!): CustomResponse!
+  uploadProductImage(productId: String!, file: Upload!): CustomResponse!
 }
 
 input UserInput {
@@ -189,6 +182,7 @@ input ProductInput {
   wishlistId: String
   categoryId: String
   tagId: String
+  image: [String!]
 }
 
 input CategoryInput {
