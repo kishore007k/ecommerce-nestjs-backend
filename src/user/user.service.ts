@@ -25,12 +25,13 @@ export class UserService {
     try {
       const users = await this.prismaService.user.findMany({
         include: {
+          wishlists: true,
+          review: true,
           orders: {
             include: {
               orderProducts: true,
             },
           },
-          wishlists: true,
         },
       });
       return users;

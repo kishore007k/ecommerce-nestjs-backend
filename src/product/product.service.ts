@@ -46,7 +46,12 @@ export class ProductService {
   // ✏️ Read all
   getProducts = async (): Promise<Product[] | CustomError> => {
     try {
-      const products = await this.prismaService.product.findMany();
+      const products = await this.prismaService.product.findMany({
+        include: {
+          orderProducts: true,
+          reviews: true,
+        },
+      });
 
       return products;
     } catch (error) {

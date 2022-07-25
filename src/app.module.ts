@@ -14,6 +14,7 @@ import { WishlistModule } from "./wishlist/wishlist.module";
 import { CategoryModule } from "./category/category.module";
 import { TagModule } from "./tag/tag.module";
 import { ImageModule } from "./image/image.module";
+import { ReviewModule } from './review/review.module';
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { ImageModule } from "./image/image.module";
     CategoryModule,
     TagModule,
     ImageModule,
+    ReviewModule,
   ],
 
   controllers: [AppController],

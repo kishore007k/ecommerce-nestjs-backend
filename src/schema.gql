@@ -32,7 +32,7 @@ type Review {
   updatedAt: Timestamp!
   review: String
   description: String
-  stars: String
+  stars: Int
   userId: String
   productId: String
 }
@@ -138,6 +138,10 @@ type Query {
   getProductsByTag(tag: String!): [Product!]!
   getProductsByPrice(price: Float!): [Product!]!
   getProductsPaginated(name: String!, skip: Float!, take: Float!): [Product!]!
+  getOrders: [Order!]!
+  getAllWishlist: [Wishlist!]!
+  getWishlistById(wishlistId: String!): Wishlist!
+  getWishlistByUserId(userId: String!): [Wishlist!]!
   getCategoryById(id: String!): Category!
   getCategories: [Category!]!
   getTagById(id: String!): Tag!
@@ -153,11 +157,18 @@ type Mutation {
   createProduct(product: ProductInput!): Product!
   updateProduct(id: String!, product: ProductInput!): Product!
   deleteProduct(id: String!): CustomResponse!
+  createOrder(order: OrderInput!, userId: String!, productId: String!): Order!
+  createWishlist(wishlistData: WishlistInput!): CustomResponse!
+  deleteWishlist(wishlistId: String!): CustomResponse!
+  updateWishlist(wishlistId: String!, wishlistData: WishlistInput!): CustomResponse!
+  addProductToWishlist(wishlistId: String!, productId: String!): Wishlist!
+  removeProductFromWishlist(wishlistId: String!, productId: String!): Wishlist!
   createCategory(category: CategoryInput!): Category!
   deleteCategory(id: String!): CustomResponse!
   createTag(tag: TagInput!): Tag!
   deleteTag(id: String!): CustomResponse!
   uploadProductImage(productId: String!, file: Upload!): CustomResponse!
+  postReview(reviewData: ReviewInput!): Review!
 }
 
 input UserInput {
@@ -185,10 +196,29 @@ input ProductInput {
   image: [String!]
 }
 
+input OrderInput {
+  name: String
+  price: Float
+  quantity: Float
+}
+
+input WishlistInput {
+  name: String
+  userId: String
+}
+
 input CategoryInput {
   category: String
 }
 
 input TagInput {
   tag: String
+}
+
+input ReviewInput {
+  review: String
+  description: String
+  stars: Int
+  userId: String
+  productId: String
 }

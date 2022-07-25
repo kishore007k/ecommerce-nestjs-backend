@@ -1,5 +1,5 @@
-import { Field, ObjectType } from "@nestjs/graphql";
-import { IsOptional, IsString } from "class-validator";
+import { Field, Int, ObjectType } from "@nestjs/graphql";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 import { BaseModel } from "../base.dto";
 
 @ObjectType()
@@ -14,10 +14,10 @@ export class Review extends BaseModel {
   @IsOptional()
   description?: string;
 
-  @Field(() => String, { nullable: true })
-  @IsString()
+  @Field(() => Int, { nullable: true })
+  @IsNumber()
   @IsOptional()
-  stars?: string;
+  stars?: number;
 
   @Field(() => String, { nullable: true })
   @IsString()

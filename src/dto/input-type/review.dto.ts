@@ -1,5 +1,5 @@
-import { Field, InputType } from "@nestjs/graphql";
-import { IsOptional, IsString } from "class-validator";
+import { Field, InputType, Int } from "@nestjs/graphql";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
 @InputType()
 export class ReviewInput {
@@ -13,10 +13,10 @@ export class ReviewInput {
   @IsOptional()
   description?: string;
 
-  @Field(() => String, { nullable: true })
-  @IsString()
+  @Field(() => Int, { nullable: true })
+  @IsNumber()
   @IsOptional()
-  stars?: string;
+  stars?: number;
 
   @Field(() => String, { nullable: true })
   @IsString()
