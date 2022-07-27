@@ -28,6 +28,7 @@ import { ReviewModule } from "./review/review.module";
         maxFileSize: 10000000,
         maxFiles: 20,
       },
+      introspection: true,
     }),
 
     PrismaModule,
