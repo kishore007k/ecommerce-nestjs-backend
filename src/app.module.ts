@@ -14,14 +14,14 @@ import { WishlistModule } from "./wishlist/wishlist.module";
 import { CategoryModule } from "./category/category.module";
 import { TagModule } from "./tag/tag.module";
 import { ImageModule } from "./image/image.module";
-import { ReviewModule } from './review/review.module';
+import { ReviewModule } from "./review/review.module";
 
 @Module({
   imports: [
     GraphQLModule.forRoot({
       driver: ApolloDriver,
-      playground: false,
-      plugins: [ApolloServerPluginLandingPageLocalDefault()],
+      // playground: false,
+      // plugins: [ApolloServerPluginLandingPageLocalDefault()],
       autoSchemaFile: join(process.cwd(), "src/schema.gql"),
       buildSchemaOptions: { dateScalarMode: "timestamp" },
       uploads: {
