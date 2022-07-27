@@ -27,7 +27,7 @@
     "@nestjs/graphql": "^10.0.18",
     "@nestjs/jwt": "^9.0.0",
     "@nestjs/platform-express": "^8.4.7",
-    "@prisma/client": "^4.0.0",
+    "@prisma/client": "4.0.0",
     "@types/graphql-upload": "^8.0.11",
     "apollo-server-express": "^3.10.0",
     "bcrypt": "^5.0.1",
