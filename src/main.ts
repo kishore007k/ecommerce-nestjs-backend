@@ -23,7 +23,7 @@ async function bootstrap() {
 
   app.useGlobalGuards(new IsVerifiedGuard(jwtService, reflector));
 
-  await app.listen(3000, () => {
+  await app.listen(process.env.PORT || 3000, () => {
     console.log(`
     🚀 Server ready at: http://localhost:3000/graphql
     ⭐️ You can explore UI by opening http://localhost:3000/
